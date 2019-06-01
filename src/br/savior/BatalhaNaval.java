@@ -72,20 +72,59 @@ public class BatalhaNaval {
 	}
 
 	public static char[][] definirPosicao (char[][] tabuleiro){
-		Scanner scan = new Scanner (System.in);
-		int lin, col;
-		int orientacao = 0;
+		
+		
 		
 		imprimirTabuleiro (tabuleiro);
+		tabuleiro = portaAviao (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		
+		tabuleiro = navioTanque (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = navioTanque (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		
+		tabuleiro = contraTorpeideiro (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = contraTorpeideiro (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = contraTorpeideiro (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		
+		tabuleiro = submarino (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = submarino (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = submarino (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+		tabuleiro = submarino (tabuleiro);
+		imprimirTabuleiro (tabuleiro);
+			
+		imprimirTabuleiro (tabuleiro);
+		return tabuleiro;
+		
+	}
+	
+	public static char[][] posicionar (char[][] tabuleiro, int lin, int col){
+		
+		tabuleiro[lin][col] = 'X';
+		return tabuleiro;
+	}
+	
+	public static char[][] portaAviao (char[][]tabuleiro){
+		Scanner scan = new Scanner (System.in);
 		
 		System.out.println("DETERMINE A POSIÇÃO DO PORTA-AVIÕES (5 QUADRADOS)");
 		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
-		lin = scan.nextInt();
+		
+		int lin = scan.nextInt();
+		
 		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
-		col = scan.nextInt();
+		int col = scan.nextInt();
 		
 		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
-		orientacao = scan.nextInt();
+		int orientacao = scan.nextInt();
+		//while (validarPosicao (tabela, lin, col) == 0);
 		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -111,13 +150,109 @@ public class BatalhaNaval {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 		}
 		
-		imprimirTabuleiro (tabuleiro);
 		return tabuleiro;
 	}
 	
-	public static char[][] posicionar (char[][] tabuleiro, int lin, int col){
+	public static char[][] navioTanque (char[][] tabuleiro){
+		Scanner scan = new Scanner (System.in);
 		
-		tabuleiro[lin][col] = 'X';
+		System.out.println("DETERMINE A POSIÇÃO DO NAVIO TANQUES (4 QUADRADOS)");
+		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
+		
+		int lin = scan.nextInt();
+		
+		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
+		int col = scan.nextInt();
+		
+		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
+		int orientacao = scan.nextInt();
+		//while (validarPosicao (tabela, lin, col) == 0);
+		
+		if (orientacao == 1) {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		else {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		return tabuleiro;
+	}
+	
+	public static char[][] contraTorpeideiro (char[][] tabuleiro){
+		Scanner scan = new Scanner (System.in);
+		
+		System.out.println("DETERMINE A POSIÇÃO DO CONTRATORPEIDEIROS (3 QUADRADOS)");
+		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
+		
+		int lin = scan.nextInt();
+		
+		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
+		int col = scan.nextInt();
+		
+		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
+		int orientacao = scan.nextInt();
+		//while (validarPosicao (tabela, lin, col) == 0);
+		
+		if (orientacao == 1) {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		else {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		return tabuleiro;
+	}
+	
+	public static char[][] submarino (char[][] tabuleiro){
+		Scanner scan = new Scanner (System.in);
+		
+		System.out.println("DETERMINE A POSIÇÃO DO SUBMARINO (2 QUADRADOS)");
+		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
+		
+		int lin = scan.nextInt();
+		
+		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
+		int col = scan.nextInt();
+		
+		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
+		int orientacao = scan.nextInt();
+		//while (validarPosicao (tabela, lin, col) == 0);
+		
+		if (orientacao == 1) {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			
+		}
+		
+		else {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
 		return tabuleiro;
 	}
 
