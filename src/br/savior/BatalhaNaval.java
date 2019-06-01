@@ -10,8 +10,8 @@ public class BatalhaNaval {
 	}
 	
 	public static void inicio () {
-		int[][] tabuleiro1 = iniciaTabuleiro ();
-		int[][] tabuleiro2 = iniciaTabuleiro ();
+		char[][] tabuleiro1 = iniciaTabuleiro ();
+		char[][] tabuleiro2 = iniciaTabuleiro ();
 		int qtdJogadores = numJog ();
 		
 		
@@ -28,19 +28,29 @@ public class BatalhaNaval {
 		
 	}
 	
-	public static void imprimirTabuleiro (int[][] tabuleiro) {
+	public static void imprimirTabuleiro (char[][] tabuleiro) {
+		
+		System.out.print("    0   1   2   3   4   5   6   7   8   9\n");
 		for (int i = 0; i < 10; i++) {
-			System.out.println("-----------------------------");
+			System.out.println("  -----------------------------------------");
+			System.out.print(i + " ");
 			for (int j = 0; j < 10; j++) {
-				System.out.print("|" + tabuleiro[i][j] + "|");
+				System.out.print("|  " + tabuleiro[i][j]);
 			}
+			System.out.print("|");
 			System.out.println();
 		}
+		System.out.println("  -----------------------------------------");
 	}
 	
-	public static int[][] iniciaTabuleiro (){
-		int[][] tabuleiro = new int [10][10];
+	public static char[][] iniciaTabuleiro (){
+		char[][] tabuleiro = new char [10][10];
 		
+		for (int i = 0; i < tabuleiro.length; i++) {
+			for (int j = 0; j < tabuleiro.length; j++) {
+				tabuleiro[i][j] = ' ';
+			}
+		}
 		return tabuleiro;
 	}
 	
@@ -61,10 +71,11 @@ public class BatalhaNaval {
 		return qtd; 
 	}
 
-	public static int[][] definirPosicao (int[][] tabuleiro){
+	public static char[][] definirPosicao (char[][] tabuleiro){
 		
 		imprimirTabuleiro (tabuleiro);
 		
+		System.out.println("DETERMINE A POSIÇÃO DO PORTA-AVIÕES (5 QUADRADOS)");
 		
 		return tabuleiro;
 	}
