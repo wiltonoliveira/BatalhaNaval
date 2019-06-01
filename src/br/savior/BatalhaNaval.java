@@ -72,11 +72,52 @@ public class BatalhaNaval {
 	}
 
 	public static char[][] definirPosicao (char[][] tabuleiro){
+		Scanner scan = new Scanner (System.in);
+		int lin, col;
+		int orientacao = 0;
 		
 		imprimirTabuleiro (tabuleiro);
 		
 		System.out.println("DETERMINE A POSIÇÃO DO PORTA-AVIÕES (5 QUADRADOS)");
+		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
+		lin = scan.nextInt();
+		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
+		col = scan.nextInt();
 		
+		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
+		orientacao = scan.nextInt();
+		
+		if (orientacao == 1) {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			col += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		else {
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+			lin += 1;
+			tabuleiro = posicionar (tabuleiro, lin, col);
+		}
+		
+		imprimirTabuleiro (tabuleiro);
+		return tabuleiro;
+	}
+	
+	public static char[][] posicionar (char[][] tabuleiro, int lin, int col){
+		
+		tabuleiro[lin][col] = 'X';
 		return tabuleiro;
 	}
 
