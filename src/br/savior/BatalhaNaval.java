@@ -12,18 +12,37 @@ public class BatalhaNaval {
 	public static void inicio () {
 		char[][] tabuleiro1 = iniciaTabuleiro ();
 		char[][] tabuleiro2 = iniciaTabuleiro ();
+		char[][] telaJ1 = iniciaTabuleiro ();
+		char[][] telaJ2 = iniciaTabuleiro ();
+		int win = 0;
+		
+		
 		int qtdJogadores = numJog ();
-		
-		
+				
 		if (qtdJogadores == 1) {
 			tabuleiro1 = definirPosicao (tabuleiro1);
 			//tabuleiro2 = preencherIA (tabuleiro2);
+			
+			
 		}
 		else {
 			System.out.println("Tabuleiro 1");
 			tabuleiro1 = definirPosicao (tabuleiro1);
 			System.out.println("\n\nTabuleiro 2");
 			tabuleiro2 = definirPosicao (tabuleiro2);
+			
+			do {
+				
+				
+				System.out.println("\n\n\n\n\n\nVez do Jogador 1");
+				imprimirTabuleiro (telaJ1);
+				telaJ1 = disparo(tabuleiro2, telaJ1);	
+					
+					
+				System.out.println("\n\n\n\n\n\nVez do Jogador 2");
+				imprimirTabuleiro (telaJ2);
+				telaJ2 = disparo(tabuleiro1, telaJ2);
+			} while (win == 0);
 		}
 		
 	}
@@ -72,9 +91,7 @@ public class BatalhaNaval {
 	}
 
 	public static char[][] definirPosicao (char[][] tabuleiro){
-		
-		
-		
+				
 		imprimirTabuleiro (tabuleiro);
 		tabuleiro = portaAviao (tabuleiro);
 		imprimirTabuleiro (tabuleiro);
@@ -255,5 +272,40 @@ public class BatalhaNaval {
 		
 		return tabuleiro;
 	}
+	
+	public static char[][] disparo (char[][] tabuleiro, char[][] tela) {
+		Scanner scan = new Scanner (System.in);
+		
+		System.out.println("Digite a linha do alvo: ");
+		int linAlvo = scan.nextInt();
+		
+		System.out.println("Digite a coluna do alvo: ");
+		int colAlvo = scan.nextInt();
+		
+		if (tabuleiro[linAlvo][colAlvo] == 'X') {
+			tela[linAlvo][colAlvo] = 'X';
+		}
+		
+		else {
+			tela[linAlvo][colAlvo] = '~';
+		}
+		
+		int acerto = checaDisparo (linAlvo, colAlvo, tabuleiro);
+		
+		if (acerto == 1) {
+			imprimirTabuleiro (tela);
+			disparo (tabuleiro, tela);
+		}
+		
+		return tela;
+	}
 
+	
+	public static int checaDisparo (int lin, int col, char[][] tabuleiro) {
+		if (tabuleiro[lin][col] == 'X')
+			return 1;
+		
+		else
+			return 0;
+	}
 }
