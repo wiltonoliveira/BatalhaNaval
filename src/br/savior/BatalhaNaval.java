@@ -32,6 +32,7 @@ public class BatalhaNaval {
 				imprimirTabuleiro (telaJ1);
 				telaJ1 = disparo(tabuleiro2, telaJ1, defLin(), defCol());
 				imprimirTabuleiro (telaJ1);
+				pausa();
 				
 				if (checaWin (telaJ1, tabuleiro2) == 1) {
 					System.out.println("\n\n\n************* Jogador 1 venceu ****************");
@@ -41,8 +42,10 @@ public class BatalhaNaval {
 					
 				System.out.println("\n\n\n\n\n\nVez do Computador");
 				imprimirTabuleiro (telaJ2);
+				pausa();
 				telaJ2 = disparoIA(telaJ2, tabuleiro1);
-				
+				imprimirTabuleiro (telaJ2);
+				pausa();
 				
 				System.out.println("\n\n\n TelaJ2 fora");
 				imprimirTabuleiro(telaJ2);
@@ -75,6 +78,7 @@ public class BatalhaNaval {
 				System.out.println("\n\n\n\n\n\nVez do Jogador 1");
 				imprimirTabuleiro (telaJ1);
 				telaJ1 = disparo(tabuleiro2, telaJ1, defLin(), defCol());	
+				
 				
 				if (checaWin (telaJ1, tabuleiro2) == 1) {
 					System.out.println("\n\n\n************* Jogador 1 venceu ****************");
@@ -387,5 +391,11 @@ public class BatalhaNaval {
 		Random rand = new Random();
 		return rand.nextInt((max - min) + 1) + min;
 		
+	}
+	
+	public static void pausa () {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Pressione Enter para continuar...");
+		int a = scan.nextInt();
 	}
 }
