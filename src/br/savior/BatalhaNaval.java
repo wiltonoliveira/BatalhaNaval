@@ -21,7 +21,8 @@ public class BatalhaNaval {
 				
 		if (numJog () == 1) {
 			
-			tabuleiro1 = definirPosicao (tabuleiro1);
+			//tabuleiro1 = definirPosicao (tabuleiro1);
+			tabuleiro1 = preencherIA (tabuleiro1);
 			tabuleiro2 = preencherIA (tabuleiro2);
 			
 				
@@ -295,6 +296,10 @@ public class BatalhaNaval {
 			tela[linAlvo][colAlvo] = '~';
 		}
 		
+		if (checaDisparo(linAlvo, colAlvo, tabuleiro) == 1) {
+			imprimirTabuleiro (tela);
+			disparo (tabuleiro, tela, defLin(), defCol());
+		}
 		
 		return tela;
 	}
@@ -317,6 +322,12 @@ public class BatalhaNaval {
 		
 		else {
 			tela[linAlvo][colAlvo] = '~';
+		}
+		
+		if (checaDisparo (linAlvo, colAlvo, tabuleiro) == 1) {
+			imprimirTabuleiro (tela);
+			pausa ();
+			disparoIA (tela, tabuleiro);
 		}
 		
 		return tela;
