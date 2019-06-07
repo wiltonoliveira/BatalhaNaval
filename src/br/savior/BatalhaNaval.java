@@ -21,8 +21,8 @@ public class BatalhaNaval {
 				
 		if (numJog () == 1) {
 			
-			//tabuleiro1 = definirPosicao (tabuleiro1);
-			tabuleiro1 = preencherIA (tabuleiro1);
+			tabuleiro1 = definirPosicao (tabuleiro1);
+			//tabuleiro1 = preencherIA (tabuleiro1);
 			tabuleiro2 = preencherIA (tabuleiro2);
 			
 				
@@ -196,7 +196,15 @@ public class BatalhaNaval {
 	
 	public static char[][] portaAviao (char[][]tabuleiro, int lin, int col, int orientacao){
 			
+			if (validaPosicao (tabuleiro, lin, col, orientacao, 5) == 0) {
+				System.out.println("Posição Ivalida, digite novamente: ");
+				portaAviao (tabuleiro, defLin(), defCol(), defOrien());
+			}
+			
+			else {
+			
 			if (orientacao == 1) {
+							
 			tabuleiro = posicionar (tabuleiro, lin, col);
 			col += 1;
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -220,11 +228,19 @@ public class BatalhaNaval {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 		}
 		
+		}
 		return tabuleiro;
 	}
 	
 	public static char[][] navioTanque (char[][]tabuleiro, int lin, int col, int orientacao){
 		
+		if (validaPosicao (tabuleiro, lin, col, orientacao, 4) == 0) {
+			System.out.println("Posição Ivalida, digite novamente: ");
+			navioTanque (tabuleiro, defLin(), defCol(), defOrien());
+		}
+		
+		else {
+			
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 			col += 1;
@@ -245,11 +261,19 @@ public class BatalhaNaval {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 		}
 		
+		}
 		return tabuleiro;
 	}
 	
 	public static char[][] contraTorpeideiro (char[][]tabuleiro, int lin, int col, int orientacao){
 		
+		if (validaPosicao (tabuleiro, lin, col, orientacao, 3) == 0) {
+			System.out.println("Posição Ivalida, digite novamente: ");
+			contraTorpeideiro (tabuleiro, defLin(), defCol(), defOrien());
+		}
+		
+		else {
+		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 			col += 1;
@@ -266,10 +290,18 @@ public class BatalhaNaval {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 		}
 		
+		}
 		return tabuleiro;
 	}
 	
 	public static char[][] submarino (char[][]tabuleiro, int lin, int col, int orientacao){
+		
+		if (validaPosicao (tabuleiro, lin, col, orientacao, 2) == 0) {
+			System.out.println("Posição Ivalida, digite novamente: ");
+			submarino (tabuleiro, defLin(), defCol(), defOrien());
+		}
+		
+		else {
 		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -284,6 +316,7 @@ public class BatalhaNaval {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 		}
 		
+		}
 		return tabuleiro;
 	}
 	
@@ -402,6 +435,31 @@ public class BatalhaNaval {
 		Random rand = new Random();
 		return rand.nextInt((max - min) + 1) + min;
 		
+	}
+	
+	public static int validaPosicao (char[][] tabuleiro, int lin, int col, int orientacao, int tam) {
+		
+		if (orientacao == 1) {
+			for (int i = 0; i < tam; i++) {
+				if (col < 0 || col > 9 || tabuleiro[lin][col] == 'X') {
+					return 0;
+				}
+				col++;
+			}
+		}
+		
+		else {
+			for (int i = 0; i < tam; i++) {
+				if (lin < 0 || lin > 9 || tabuleiro[lin][col] == 'X') {
+					return 0;
+				}
+				lin++;
+			}
+		}
+		
+		
+		
+		return 1;
 	}
 	
 	public static void pausa () {
