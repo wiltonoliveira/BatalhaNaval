@@ -14,15 +14,15 @@ public class BatalhaNaval {
 		char[][] tabuleiro2 = iniciaTabuleiro ();
 		char[][] telaJ1 = iniciaTabuleiro ();
 		char[][] telaJ2 = iniciaTabuleiro ();
-		int win = 0;
+		int win = 1;
 		
 		
 		int qtdJogadores = numJog ();
 				
 		if (qtdJogadores == 1) {
-			tabuleiro1 = definirPosicao (tabuleiro1);
-			//tabuleiro2 = preencherIA (tabuleiro2);
-			
+			//tabuleiro1 = definirPosicao (tabuleiro1);
+			tabuleiro2 = preencherIA (tabuleiro2);
+			imprimirTabuleiro (tabuleiro2);
 			
 		}
 		else {
@@ -37,11 +37,23 @@ public class BatalhaNaval {
 				System.out.println("\n\n\n\n\n\nVez do Jogador 1");
 				imprimirTabuleiro (telaJ1);
 				telaJ1 = disparo(tabuleiro2, telaJ1);	
-					
+				
+				if (checaWin (telaJ1, tabuleiro2) == 1) {
+					System.out.println("\n\n\n************* Jogador 1 venceu ****************");
+					win = 1;
+					break;
+				}
 					
 				System.out.println("\n\n\n\n\n\nVez do Jogador 2");
 				imprimirTabuleiro (telaJ2);
 				telaJ2 = disparo(tabuleiro1, telaJ2);
+				
+				if (checaWin (telaJ2, tabuleiro1) == 1) {
+					System.out.println("\n\n\n************* Jogador 2 venceu ****************");
+					win = 1;
+					break;
+				}
+				
 			} while (win == 0);
 		}
 		
@@ -93,31 +105,42 @@ public class BatalhaNaval {
 	public static char[][] definirPosicao (char[][] tabuleiro){
 				
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = portaAviao (tabuleiro);
+		System.out.println("POSICIONE O PORTA AVIÕES (5 QUADRADOS)");
+		tabuleiro = portaAviao (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
 		
-		tabuleiro = navioTanque (tabuleiro);
+		
+		System.out.println("POSICIONE O PRIMEIRO NAVIO TANQUE (4 QUADRADOS)");
+		tabuleiro = navioTanque (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = navioTanque (tabuleiro);
+		System.out.println("POSICIONE O SEGUNDO NAVIO TANQUE (4 QUADRADOS)");
+		tabuleiro = navioTanque (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
 		
-		tabuleiro = contraTorpeideiro (tabuleiro);
+		System.out.println("POSICIONE O PRIMEIRO CONTRA TORPEDEIRO (3 QUADRADOS)");
+		tabuleiro = contraTorpeideiro (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = contraTorpeideiro (tabuleiro);
+		System.out.println("POSICIONE O SEGUNDO CONTRA TORPEDEIRO (3 QUADRADOS)");
+		tabuleiro = contraTorpeideiro (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = contraTorpeideiro (tabuleiro);
+		System.out.println("POSICIONE O TERCEIRO CONTRA TORPEDEIRO (3 QUADRADOS)");
+		tabuleiro = contraTorpeideiro (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
 		
-		tabuleiro = submarino (tabuleiro);
+		System.out.println("POSICIONE O PRIMEIRO SUBMARINO (2 QUADRADOS)");
+		tabuleiro = submarino (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = submarino (tabuleiro);
+		System.out.println("POSICIONE O SEGUNDO SUBMARINO (2 QUADRADOS)");
+		tabuleiro = submarino (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = submarino (tabuleiro);
+		System.out.println("POSICIONE O TERCEIRO SUBMARINO (2 QUADRADOS)");
+		tabuleiro = submarino (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
-		tabuleiro = submarino (tabuleiro);
+		System.out.println("POSICIONE O QUARTO SUBMARINO (2 QUADRADOS)");
+		tabuleiro = submarino (tabuleiro, defLin(), defCol(), defOrien());
 		imprimirTabuleiro (tabuleiro);
 			
-		imprimirTabuleiro (tabuleiro);
+		
 		return tabuleiro;
 		
 	}
@@ -128,22 +151,9 @@ public class BatalhaNaval {
 		return tabuleiro;
 	}
 	
-	public static char[][] portaAviao (char[][]tabuleiro){
-		Scanner scan = new Scanner (System.in);
-		
-		System.out.println("DETERMINE A POSIÇÃO DO PORTA-AVIÕES (5 QUADRADOS)");
-		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
-		
-		int lin = scan.nextInt();
-		
-		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
-		int col = scan.nextInt();
-		
-		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
-		int orientacao = scan.nextInt();
-		//while (validarPosicao (tabela, lin, col) == 0);
-		
-		if (orientacao == 1) {
+	public static char[][] portaAviao (char[][]tabuleiro, int lin, int col, int orientacao){
+			
+			if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
 			col += 1;
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -170,20 +180,7 @@ public class BatalhaNaval {
 		return tabuleiro;
 	}
 	
-	public static char[][] navioTanque (char[][] tabuleiro){
-		Scanner scan = new Scanner (System.in);
-		
-		System.out.println("DETERMINE A POSIÇÃO DO NAVIO TANQUES (4 QUADRADOS)");
-		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
-		
-		int lin = scan.nextInt();
-		
-		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
-		int col = scan.nextInt();
-		
-		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
-		int orientacao = scan.nextInt();
-		//while (validarPosicao (tabela, lin, col) == 0);
+	public static char[][] navioTanque (char[][]tabuleiro, int lin, int col, int orientacao){
 		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -208,20 +205,7 @@ public class BatalhaNaval {
 		return tabuleiro;
 	}
 	
-	public static char[][] contraTorpeideiro (char[][] tabuleiro){
-		Scanner scan = new Scanner (System.in);
-		
-		System.out.println("DETERMINE A POSIÇÃO DO CONTRATORPEIDEIROS (3 QUADRADOS)");
-		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
-		
-		int lin = scan.nextInt();
-		
-		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
-		int col = scan.nextInt();
-		
-		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
-		int orientacao = scan.nextInt();
-		//while (validarPosicao (tabela, lin, col) == 0);
+	public static char[][] contraTorpeideiro (char[][]tabuleiro, int lin, int col, int orientacao){
 		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -242,20 +226,7 @@ public class BatalhaNaval {
 		return tabuleiro;
 	}
 	
-	public static char[][] submarino (char[][] tabuleiro){
-		Scanner scan = new Scanner (System.in);
-		
-		System.out.println("DETERMINE A POSIÇÃO DO SUBMARINO (2 QUADRADOS)");
-		System.out.print("LINHA DA POSIÇÃO INICIAL: ");
-		
-		int lin = scan.nextInt();
-		
-		System.out.print("COLUNA DA POSIÇÃO INICIAL: ");
-		int col = scan.nextInt();
-		
-		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
-		int orientacao = scan.nextInt();
-		//while (validarPosicao (tabela, lin, col) == 0);
+	public static char[][] submarino (char[][]tabuleiro, int lin, int col, int orientacao){
 		
 		if (orientacao == 1) {
 			tabuleiro = posicionar (tabuleiro, lin, col);
@@ -307,5 +278,63 @@ public class BatalhaNaval {
 		
 		else
 			return 0;
+	}
+	
+	public static int checaWin (char[][] tela, char[][] tabuleiro) {
+		
+		for (int i = 0; i < tabuleiro.length; i++) {
+			for (int j = 0; j < tabuleiro[i].length; j++) {
+				if (tela[i][j] == '~')
+					tabuleiro[i][j] = '~';
+				
+				
+				if (tela[i][j] != tabuleiro[i][j])
+					return 0;
+			}
+		}
+		return 1;
+	}
+	
+	public static int defLin () {
+		Scanner scan = new Scanner (System.in);
+		
+		System.out.print("Digite a linha do alvo: ");
+		int linAlvo = scan.nextInt();
+		
+		return linAlvo;
+		
+	}
+	
+	public static int defCol () {
+		Scanner scan = new Scanner (System.in);
+		
+		System.out.print("Digite a coluna do alvo: ");
+		int colAlvo = scan.nextInt();
+		
+		return colAlvo;
+		
+	}
+	
+	public static int defOrien () {
+		Scanner scan = new Scanner (System.in);
+		System.out.print("1 - HORIZONTAL ou 2 - VERTICAL: ");
+		int orientacao = scan.nextInt();
+		
+		return orientacao;
+	}
+	
+	public static char[][] preencherIA (char[][] tabuleiro) {
+		tabuleiro = portaAviao (tabuleiro, 0, 0, 2);
+		tabuleiro = navioTanque (tabuleiro, 5, 4, 1);
+		tabuleiro = navioTanque (tabuleiro, 6, 1, 2);
+		tabuleiro = contraTorpeideiro (tabuleiro, 1, 5, 2);
+		tabuleiro = contraTorpeideiro (tabuleiro, 0, 9, 2);
+		tabuleiro = contraTorpeideiro (tabuleiro, 7, 3, 1);
+		tabuleiro = submarino (tabuleiro, 9, 3, 1);
+		tabuleiro = submarino (tabuleiro, 6, 8, 2);
+		tabuleiro = submarino (tabuleiro, 1, 2, 1);
+		tabuleiro = submarino (tabuleiro, 0, 7, 3);
+		
+		return tabuleiro;
 	}
 }
