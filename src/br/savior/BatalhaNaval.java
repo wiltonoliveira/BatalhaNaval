@@ -1,6 +1,7 @@
 package br.savior;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class BatalhaNaval {
 
@@ -14,15 +15,52 @@ public class BatalhaNaval {
 		char[][] tabuleiro2 = iniciaTabuleiro ();
 		char[][] telaJ1 = iniciaTabuleiro ();
 		char[][] telaJ2 = iniciaTabuleiro ();
-		int win = 1;
+		int win = 0;
 		
 		
-		int qtdJogadores = numJog ();
 				
-		if (qtdJogadores == 1) {
-			//tabuleiro1 = definirPosicao (tabuleiro1);
+		if (numJog () == 1) {
+			
+			tabuleiro1 = definirPosicao (tabuleiro1);
 			tabuleiro2 = preencherIA (tabuleiro2);
-			imprimirTabuleiro (tabuleiro2);
+			
+				
+				do {
+				
+				
+				System.out.println("\n\n\n\n\n\nVez do Jogador 1");
+				imprimirTabuleiro (telaJ1);
+				telaJ1 = disparo(tabuleiro2, telaJ1, defLin(), defCol());
+				imprimirTabuleiro (telaJ1);
+				
+				if (checaWin (telaJ1, tabuleiro2) == 1) {
+					System.out.println("\n\n\n************* Jogador 1 venceu ****************");
+					win = 1;
+					break;
+				}
+					
+				System.out.println("\n\n\n\n\n\nVez do Computador");
+				imprimirTabuleiro (telaJ2);
+				telaJ2 = disparoIA(telaJ2, tabuleiro1);
+				
+				
+				System.out.println("\n\n\n TelaJ2 fora");
+				imprimirTabuleiro(telaJ2);
+				
+				if (checaWin (telaJ2, tabuleiro1) == 1) {
+					
+					System.out.println("\n\n\n TelaJ2 dentro");
+					imprimirTabuleiro (telaJ2);
+					//imprimirTabuleiro (tabuleiro1);
+					
+					
+					System.out.println("\n\n\n************* Computador venceu ****************");
+					win = 1;
+					break;
+				}
+				
+				} while (win == 0);
+				
 			
 		}
 		else {
@@ -36,7 +74,7 @@ public class BatalhaNaval {
 				
 				System.out.println("\n\n\n\n\n\nVez do Jogador 1");
 				imprimirTabuleiro (telaJ1);
-				telaJ1 = disparo(tabuleiro2, telaJ1);	
+				telaJ1 = disparo(tabuleiro2, telaJ1, defLin(), defCol());	
 				
 				if (checaWin (telaJ1, tabuleiro2) == 1) {
 					System.out.println("\n\n\n************* Jogador 1 venceu ****************");
@@ -46,7 +84,7 @@ public class BatalhaNaval {
 					
 				System.out.println("\n\n\n\n\n\nVez do Jogador 2");
 				imprimirTabuleiro (telaJ2);
-				telaJ2 = disparo(tabuleiro1, telaJ2);
+				telaJ2 = disparo(tabuleiro1, telaJ2, defLin(), defCol());
 				
 				if (checaWin (telaJ2, tabuleiro1) == 1) {
 					System.out.println("\n\n\n************* Jogador 2 venceu ****************");
@@ -244,14 +282,30 @@ public class BatalhaNaval {
 		return tabuleiro;
 	}
 	
-	public static char[][] disparo (char[][] tabuleiro, char[][] tela) {
-		Scanner scan = new Scanner (System.in);
+	public static char[][] disparo (char[][] tabuleiro, char[][] tela, int linAlvo, int colAlvo) {
+		if (tabuleiro[linAlvo][colAlvo] == 'X') {
+			tela[linAlvo][colAlvo] = 'X';
+		}
 		
-		System.out.println("Digite a linha do alvo: ");
-		int linAlvo = scan.nextInt();
+		else {
+			tela[linAlvo][colAlvo] = '~';
+		}
 		
-		System.out.println("Digite a coluna do alvo: ");
-		int colAlvo = scan.nextInt();
+		
+		return tela;
+	}
+
+	public static int checaDisparo (int lin, int col, char[][] tabuleiro) {
+		if (tabuleiro[lin][col] == 'X')
+			return 1;
+		
+		else
+			return 0;
+	}
+	
+	public static char[][] disparoIA (char[][] tela, char[][] tabuleiro) {
+		int linAlvo = aleatorio (0,9);
+		int colAlvo = aleatorio (0,9);
 		
 		if (tabuleiro[linAlvo][colAlvo] == 'X') {
 			tela[linAlvo][colAlvo] = 'X';
@@ -261,34 +315,25 @@ public class BatalhaNaval {
 			tela[linAlvo][colAlvo] = '~';
 		}
 		
-		int acerto = checaDisparo (linAlvo, colAlvo, tabuleiro);
-		
-		if (acerto == 1) {
-			imprimirTabuleiro (tela);
-			disparo (tabuleiro, tela);
-		}
-		
 		return tela;
-	}
-
-	
-	public static int checaDisparo (int lin, int col, char[][] tabuleiro) {
-		if (tabuleiro[lin][col] == 'X')
-			return 1;
-		
-		else
-			return 0;
 	}
 	
 	public static int checaWin (char[][] tela, char[][] tabuleiro) {
 		
-		for (int i = 0; i < tabuleiro.length; i++) {
-			for (int j = 0; j < tabuleiro[i].length; j++) {
-				if (tela[i][j] == '~')
+		char[][] copiaTela = new char[10][10];
+		
+		for (int i = 0; i < copiaTela.length; i++) {
+			for (int j = 0; j < copiaTela[i].length; j++) {
+				copiaTela[i][j] = tela[i][j];
+			}
+		}
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (copiaTela[i][j] == '~') 
 					tabuleiro[i][j] = '~';
-				
-				
-				if (tela[i][j] != tabuleiro[i][j])
+								
+				if (copiaTela[i][j] != tabuleiro[i][j])
 					return 0;
 			}
 		}
@@ -336,5 +381,11 @@ public class BatalhaNaval {
 		tabuleiro = submarino (tabuleiro, 0, 7, 3);
 		
 		return tabuleiro;
+	}
+	
+	public static int aleatorio (int min, int max) {
+		Random rand = new Random();
+		return rand.nextInt((max - min) + 1) + min;
+		
 	}
 }
